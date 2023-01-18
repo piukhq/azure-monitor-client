@@ -1,0 +1,64 @@
+[build-system]
+requires = ["poetry-core", "poetry-dynamic-versioning"]
+build-backend = "poetry_dynamic_versioning.backend"
+
+[tool.poetry]
+name = "azure-monitor-client"
+version = "0.0.0"
+description = ""
+authors = ["Chris Latham <cl@bink.com>"]
+readme = "README.md"
+packages = [{ include = "azure_monitor_client" }]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+aiohttp = "^3.8.3"
+aiodns = "^3.0.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.2.0"
+pytest-asyncio = "^0.20.3"
+black = "^22.12.0"
+pylint = "^2.15.9"
+mypy = "^0.991"
+ipython = "^8.8.0"
+isort = "^5.11.4"
+pytest-cov = "^4.0.0"
+aioresponses = "^0.7.4"
+
+[tool.poetry-dynamic-versioning]
+enable = true
+
+[tool.isort]
+profile = "black"
+
+[tool.mypy]
+ignore_missing_imports = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_unreachable = true
+
+[tool.pylint.messages_control]
+disable = [
+    "redefined-outer-name",
+    "too-few-public-methods",
+    "fixme",
+    "useless-import-alias",   # directly conflicts with pyright's re-exports preference.
+]
+good-names = [
+    "ex", # exception
+]
+
+[tool.pyright]
+venvPath = "."
+venv = ".venv"
+reportGeneralTypeIssues = false
+reportPrivateImportUsage = false
+
+[tool.coverage.run]
+omit = ["tests/*"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
